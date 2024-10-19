@@ -1,0 +1,8 @@
+Random array, bubble_sort:
+0, 77, 336, 889, 1879, 3027, 4057, 5576, 7408, 9480, 11799, 
+Sorted array, bubble_sort:
+0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+Almost sorted array, bubble_sort:
+0, 71, 281, 819, 1597, 2676, 3582, 4999, 6765, 8879, 10385, 
+Reverse-sorted array, bubble_sort:
+0, 98, 359, 828, 1424, 2330, 3353, 4609, 6016, 7840, 9594, 
