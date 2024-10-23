@@ -376,7 +376,7 @@ public class main{
         function.Functions.clearFile("//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard.txt");
 
         function.Functions.writeStringToFile("Random array, shell_sort(Hibbard sequence):", "//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard.txt");
-        function.Functions.writeArrayToFile(random_hibbard_time, "//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard .txt");
+        function.Functions.writeArrayToFile(random_hibbard_time, "//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard.txt");
 
         function.Functions.writeStringToFile("Sorted array, shell_sort(Hibbard sequence):", "//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard.txt");
         function.Functions.writeArrayToFile(sorted_hibbard_time, "//Users/dmitrijstrelnikov/IdeaProjects/aisd1/src/hibbard.txt");

@@ -1,4 +1,10 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+
 public class sortirouka {
+
+
     public static void selectionsrt(int[] array) {
         int n = array.length;
 
@@ -175,114 +181,136 @@ public class sortirouka {
         }
     }
 
-    public static void prattSort(int[] array) {
-        int n = array.length;
-        int[] gaps = new int[n]; // Массив для хранения интервалов
-        int gapCount = 0;
+    static class ShellPratt {
 
-        // Генерация интервалов по формуле d_i = 2^i * 3^j
-        for (int i = 0; (1 << i) <= n; i++) {
+        // Функция для генерации последовательности Пратта
+        private static int[] generate(int n) {
+            ArrayList<Integer> pratt = new ArrayList<>();
 
-            for (int j = 0; (1 << i) * (3 << j) <= n; j++) {
-
-                int gap = (1 << i) * (3 << j);
-                if (gap <= n) {
-                    gaps[gapCount++] = gap; // Сохраняем интервал
+            // Генерация шагов Пратта (2^i * 3^j) в пределах размера массива n
+            for (int i = 1; i <= n; i *= 2) {
+                for (int j = i; j <= n; j *= 3) {
+                    pratt.add(j);
                 }
             }
+
+            // Преобразуем список в массив и сортируем его по убыванию
+            Collections.sort(pratt, Collections.reverseOrder());
+            return pratt.stream().mapToInt(Integer::intValue).toArray();
         }
 
-        // Сортировка с использованием интервалов
-        for (int k = gapCount - 1; k >= 0; k--) { // Проходим по интервалам в обратном порядке
-
-            int gap = gaps[k];
-            for (int i = gap; i < n; i++) {
-
-                int temp = array[i];
-                int j;
-                for (j = i; j >= gap && array[j - gap] > temp; j -= gap) {
-
-                    array[j] = array[j - gap];
-                }
-                array[j] = temp;
-            }
-        }
-    }
-
-    public static void quicksrt(int[] sortArr, int low, int high) {
-
-        if (sortArr.length == 0 || low >= high) return;
-
-
-        int middle = low + (high - low) / 2;
-        int border = sortArr[middle];
-
-
-        int i = low, j = high;
-        while (i <= j) {
-            while (sortArr[i] < border) i++;
-            while (sortArr[j] > border) j--;
-            if (i <= j) {
-                int swap = sortArr[i];
-                sortArr[i] = sortArr[j];
-                sortArr[j] = swap;
-                i++;
-                j--;
-            }
-        }
-
-
-        if (low < j) quicksrt(sortArr, low, j);
-        if (high > i) quicksrt(sortArr, i, high);
-    }
-
-    static class heapsort {
-
-        public static void heapSort(int[] array) {
-
+        // Функция сортировки Shell Sort по Пратту
+        public static void shpratt(int[] array) {
             int n = array.length;
-            for (int i = n / 2 - 1; i >= 0; i--) {
+            int[] gaps = generate(n); // Получаем последовательность Пратта
 
-                heapy(array, n, i);
-            }
-
-            for (int i = n - 1; i > 0; i--) {
-
-                int temp = array[0];
-                array[0] = array[i];
-                array[i] = temp;
-
-                heapy(array, i, 0);
+            // Основной цикл сортировки
+            for (int gap : gaps) {
+                for (int i = gap; i < n; i++) {
+                    int temp = array[i];
+                    int j = i;
+                    while (j >= gap && array[j - gap] > temp) {
+                        array[j] = array[j - gap];
+                        j -= gap;
+                    }
+                    array[j] = temp;
+                }
             }
         }
 
+    }
 
-        private static void heapy(int[] array, int n, int i) {
-            int largest = i;
-            int left = 2 * i + 1;
-            int right = 2 * i + 2;
+    public class QuickSort {
 
+        // Метод для разделения массива
+        private static int partition(int[] array, int low, int high) {
+            // Выбор опорного элемента как медианы из трех
+            int mid = low + (high - low) / 2;
+            int pivot = array[mid];
+            // Перемещение опорного элемента в конец
+            swap(array, mid, high);
+            int storeIndex = low;
 
-            if (left < n && array[left] > array[largest]) {
-
-                largest = left;
+            for (int i = low; i < high; i++) {
+                if (array[i] < pivot) {
+                    swap(array, i, storeIndex);
+                    storeIndex++;
+                }
             }
+            // Перемещение опорного элемента на его окончательную позицию
+            swap(array, storeIndex, high);
+            return storeIndex;
+        }
 
+        // Метод для обмена элементов массива
+        private static void swap(int[] array, int i, int j) {
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
 
-            if (right < n && array[right] > array[largest]) {
-
-                largest = right;
-            }
-
-
-            if (largest != i) {
-
-                int swap = array[i];
-                array[i] = array[largest];
-                array[largest] = swap;
-
-                heapy(array, n, largest);
+        // Основной метод быстрой сортировки
+        public static void quickSort(int[] array, int low, int high) {
+            while (low < high) {
+                int pivotIndex = partition(array, low, high);
+                // Рекурсивно сортируем меньшую подчасть
+                if (pivotIndex - low < high - pivotIndex) {
+                    quickSort(array, low, pivotIndex - 1);
+                    low = pivotIndex + 1; // Сортируем правую часть
+                } else {
+                    quickSort(array, pivotIndex + 1, high);
+                    high = pivotIndex - 1; // Сортируем левую часть
+                }
             }
         }
     }
-}
+        public class heapsort {
+
+            public static void heapSort(int[] array) {
+
+                int n = array.length;
+                for (int i = n / 2 - 1; i >= 0; i--) {
+
+                    heapy(array, n, i);
+                }
+
+                for (int i = n - 1; i > 0; i--) {
+
+                    int temp = array[0];
+                    array[0] = array[i];
+                    array[i] = temp;
+
+                    heapy(array, i, 0);
+                }
+            }
+
+
+            private static void heapy(int[] array, int n, int i) {
+                int largest = i;
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+
+
+                if (left < n && array[left] > array[largest]) {
+
+                    largest = left;
+                }
+
+
+                if (right < n && array[right] > array[largest]) {
+
+                    largest = right;
+                }
+
+
+                if (largest != i) {
+
+                    int swap = array[i];
+                    array[i] = array[largest];
+                    array[largest] = swap;
+
+                    heapy(array, n, largest);
+                }
+            }
+        }
+    }

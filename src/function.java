@@ -11,7 +11,7 @@ public class function {
 
             Functions.array_randomizer(array);
 
-            sortirouka.quicksrt(array, array.length/100*90, array.length-1);
+            sortirouka.QuickSort.quickSort(array, array.length/100*90, array.length-1);
 
         }
 
@@ -47,7 +47,7 @@ public class function {
             for(int i = 0; i<array.length; i++){
                 array[i] = i;
             }
-            sortirouka.quicksrt(array, 0, array.length-1);
+            sortirouka.QuickSort.quickSort(array, 0, array.length-1);
         }
 
         public static void array_randomizer(int[] array){
@@ -83,7 +83,7 @@ public class function {
 
         public static long get_quick_time(int[] array){
             long startTime = System.currentTimeMillis();
-            sortirouka.quicksrt(array, 0, array.length-1);
+            sortirouka.QuickSort.quickSort(array, 0, array.length-1);
             long endTime = System.currentTimeMillis();
             return endTime - startTime;
         }
@@ -111,7 +111,7 @@ public class function {
 
         public static long get_pratt_time(int[] array){
             long startTime = System.currentTimeMillis();
-            sortirouka.prattSort(array);
+            sortirouka.ShellPratt.shpratt(array);
             long endTime = System.currentTimeMillis();
             return endTime - startTime;
         }
@@ -148,26 +148,6 @@ public class function {
             }
         }
 
-        public static void almost_sort_array(int[] array){
-
-            for(int i = 0; i<array.length; i++){
-                array[i] = i;
-            }
-
-            Functions.almost_sort(array);
-        }
-
-        public static void almost_sort(int[] sortArr){
-
-            for (int i = 0; i<sortArr.length-1; i = i + 20) {
-
-                int temp = sortArr[i];
-
-                sortArr[i] = sortArr[i + 10];
-                sortArr[i + 10] = temp;
-            }
-
-        }
 
         public static void reverse_sort(int[] sortArr){
 
